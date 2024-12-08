@@ -21,6 +21,8 @@ library HelloWorldDeploymentLib {
     using Strings for *;
     using UpgradeableProxyLib for address;
 
+    address constant hookAddress = 0xA93A1C19043e17032E0f0E19b2FC26B256830600;
+
     Vm internal constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
 
     struct DeploymentData {
@@ -45,7 +47,11 @@ library HelloWorldDeploymentLib {
             address(new ECDSAStakeRegistry(IDelegationManager(core.delegationManager)));
         address helloWorldServiceManagerImpl = address(
             new HelloWorldServiceManager(
-                core.avsDirectory, result.stakeRegistry, core.rewardsCoordinator, core.delegationManager
+                core.avsDirectory,
+                result.stakeRegistry,
+                core.rewardsCoordinator,
+                core.delegationManager,
+                hookAddress
             )
         );
         // Upgrade contracts
@@ -144,7 +150,7 @@ library HelloWorldDeploymentLib {
             data.strategy.toHexString(),
             '","token":"',
             data.token.toHexString(),
-             '"}'
+            '"}'
         );
     }
 }

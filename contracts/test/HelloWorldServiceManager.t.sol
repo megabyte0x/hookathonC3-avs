@@ -241,12 +241,14 @@ contract HelloWorldTaskManagerSetup is Test {
         return signatures;
     }
 
-    function createTask(TrafficGenerator memory generator, string memory taskName) internal {
+    function createTask(
+        TrafficGenerator memory generator
+    ) internal {
         IHelloWorldServiceManager helloWorldServiceManager =
             IHelloWorldServiceManager(helloWorldDeployment.helloWorldServiceManager);
 
         vm.prank(generator.key.addr);
-        helloWorldServiceManager.createNewTask(taskName);
+        helloWorldServiceManager.createNewTask();
     }
 
     function respondToTask(
@@ -255,14 +257,14 @@ contract HelloWorldTaskManagerSetup is Test {
         uint32 referenceTaskIndex
     ) internal {
         // Create the message hash
-        bytes32 messageHash = keccak256(abi.encodePacked("Hello, ", task.name));
+        bytes32 messageHash = keccak256(abi.encodePacked("Hello, "));
 
         bytes memory signature = signWithSigningKey(operator, messageHash);
 
         address[] memory operators = new address[](1);
-        operators[0]=operator.key.addr;
+        operators[0] = operator.key.addr;
         bytes[] memory signatures = new bytes[](1);
-        signatures[0]= signature;
+        signatures[0] = signature;
 
         bytes memory signedTask = abi.encode(operators, signatures, uint32(block.number));
 
@@ -370,10 +372,8 @@ contract CreateTask is HelloWorldTaskManagerSetup {
     }
 
     function testCreateTask() public {
-        string memory taskName = "Test Task";
-
         vm.prank(generator.key.addr);
-        IHelloWorldServiceManager.Task memory newTask = sm.createNewTask(taskName);
+        IHelloWorldServiceManager.Task memory newTask = sm.createNewTask();
     }
 }
 
@@ -415,22 +415,21 @@ contract RespondToTask is HelloWorldTaskManagerSetup {
     }
 
     function testRespondToTask() public {
-        string memory taskName = "TestTask";
-        IHelloWorldServiceManager.Task memory newTask = sm.createNewTask(taskName);
+        IHelloWorldServiceManager.Task memory newTask = sm.createNewTask();
         uint32 taskIndex = sm.latestTaskNum() - 1;
 
-        bytes32 messageHash = keccak256(abi.encodePacked("Hello, ", taskName));
+        bytes32 messageHash = keccak256(abi.encodePacked("Hello, "));
         bytes32 ethSignedMessageHash = messageHash.toEthSignedMessageHash();
         bytes memory signature = signWithSigningKey(operators[0], ethSignedMessageHash); // TODO: Use signing key after changes to service manager
 
         address[] memory operatorsMem = new address[](1);
-        operatorsMem[0]=operators[0].key.addr;
+        operatorsMem[0] = operators[0].key.addr;
         bytes[] memory signatures = new bytes[](1);
-        signatures[0]= signature;
+        signatures[0] = signature;
 
         bytes memory signedTask = abi.encode(operatorsMem, signatures, uint32(block.number));
 
-        vm.roll(block.number+1);
+        vm.roll(block.number + 1);
         sm.respondToTask(newTask, taskIndex, signedTask);
     }
 }

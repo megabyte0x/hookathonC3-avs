@@ -7,7 +7,6 @@ interface IHelloWorldServiceManager {
     event TaskResponded(uint32 indexed taskIndex, Task task, address operator);
 
     struct Task {
-        string name;
         uint32 taskCreatedBlock;
     }
 
@@ -22,9 +21,7 @@ interface IHelloWorldServiceManager {
         uint32 taskIndex
     ) external view returns (bytes memory);
 
-    function createNewTask(
-        string memory name
-    ) external returns (Task memory);
+    function createNewTask() external returns (Task memory);
 
     function respondToTask(
         Task calldata task,

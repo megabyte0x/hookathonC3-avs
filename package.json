@@ -15,8 +15,12 @@
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest"
   },
   "dependencies": {
+    "circomlib": "^2.0.5",
+    "circomlibjs": "^0.1.7",
     "dotenv": "^10.0.0",
-    "ethers": "^6.13.2"
+    "ethers": "^6.13.2",
+    "fixed-merkle-tree": "^0.7.3",
+    "snarkjs": "^0.7.5"
   },
   "devDependencies": {
     "@types/jest": "^29.5.13",

@@ -13,7 +13,17 @@
         "internalType": "address"
       },
       {
+        "name": "_rewardsCoordinator",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
         "name": "_delegationManager",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "_hookAddress",
         "type": "address",
         "internalType": "address"
       }
@@ -131,24 +141,13 @@
   {
     "type": "function",
     "name": "createNewTask",
-    "inputs": [
-      {
-        "name": "name",
-        "type": "string",
-        "internalType": "string"
-      }
-    ],
+    "inputs": [],
     "outputs": [
       {
         "name": "",
         "type": "tuple",
         "internalType": "struct IHelloWorldServiceManager.Task",
         "components": [
-          {
-            "name": "name",
-            "type": "string",
-            "internalType": "string"
-          },
           {
             "name": "taskCreatedBlock",
             "type": "uint32",
@@ -200,6 +199,19 @@
         "name": "",
         "type": "address[]",
         "internalType": "address[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "hookAddress",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
       }
     ],
     "stateMutability": "view"
@@ -282,11 +294,6 @@
         "internalType": "struct IHelloWorldServiceManager.Task",
         "components": [
           {
-            "name": "name",
-            "type": "string",
-            "internalType": "string"
-          },
-          {
             "name": "taskCreatedBlock",
             "type": "uint32",
             "internalType": "uint32"
@@ -299,7 +306,7 @@
         "internalType": "uint32"
       },
       {
-        "name": "signature",
+        "name": "result",
         "type": "bytes",
         "internalType": "bytes"
       }
@@ -319,6 +326,19 @@
       }
     ],
     "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "setHookAddress",
+    "inputs": [
+      {
+        "name": "_hookAddress",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
@@ -402,11 +422,6 @@
         "internalType": "struct IHelloWorldServiceManager.Task",
         "components": [
           {
-            "name": "name",
-            "type": "string",
-            "internalType": "string"
-          },
-          {
             "name": "taskCreatedBlock",
             "type": "uint32",
             "internalType": "uint32"
@@ -470,11 +485,6 @@
         "indexed": false,
         "internalType": "struct IHelloWorldServiceManager.Task",
         "components": [
-          {
-            "name": "name",
-            "type": "string",
-            "internalType": "string"
-          },
           {
             "name": "taskCreatedBlock",
             "type": "uint32",
